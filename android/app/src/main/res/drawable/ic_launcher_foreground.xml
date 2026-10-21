@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A white sword on the 108dp adaptive canvas (safe zone is the centre 66dp). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- blade -->
+    <path android:fillColor="#FFFFFF" android:pathData="M54,24 L58,30 L58,66 L50,66 L50,30 Z"/>
+    <!-- crossguard -->
+    <path android:fillColor="#FFFFFF" android:pathData="M40,66 L68,66 L68,71 L40,71 Z"/>
+    <!-- grip -->
+    <path android:fillColor="#FFFFFF" android:pathData="M51.5,71 L56.5,71 L56.5,81 L51.5,81 Z"/>
+    <!-- pommel -->
+    <path android:fillColor="#FFFFFF" android:pathData="M54,80 m-4,0 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0"/>
+</vector>
