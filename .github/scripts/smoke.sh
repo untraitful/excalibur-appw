@@ -16,3 +16,14 @@ adb shell uiautomator dump /sdcard/ui.xml >/dev/null 2>&1
 adb pull /sdcard/ui.xml smoke/ui.xml >/dev/null 2>&1
 echo "== visible text =="
 grep -oE '(text|content-desc)="[^"]+"' smoke/ui.xml | sort -u || echo "(none)"
+
+if grep -qE "EXCALIBUR_ERROR|FATAL EXCEPTION" smoke/logcat.txt; then
+  echo "App failed to start:"
+  grep -A5 -E "EXCALIBUR_ERROR|FATAL EXCEPTION" smoke/logcat.txt | head -40
+  exit 1
+fi
+if grep -q "app not running" smoke/pid.txt; then
+  echo "App is not running"
+  exit 1
+fi
+echo "Smoke test passed"

@@ -34,6 +34,10 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.getByName("debug")
+            // R8 renames Kotlin plugin code that Dart calls through JNI by exact
+            // signature (shared_preferences), which breaks it at runtime.
+            isMinifyEnabled = false
+            isShrinkResources = false
         }
     }
 }

@@ -71,7 +71,10 @@ class _ExcaliburAppState extends State<ExcaliburApp> {
 }
 
 class _ErrorView extends StatelessWidget {
-  const _ErrorView(this.message);
+  _ErrorView(this.message) {
+    // Also log it, so the emulator smoke test can detect a startup failure.
+    debugPrint('EXCALIBUR_ERROR: $message');
+  }
   final String message;
 
   @override
