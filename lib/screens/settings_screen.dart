@@ -31,8 +31,14 @@ class SettingsScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('CANCEL')),
-          FilledButton(onPressed: () => Navigator.pop(c, true), child: const Text('REPLACE ALL')),
+          TextButton(
+            onPressed: () => Navigator.pop(c, false),
+            child: const Text('CANCEL'),
+          ),
+          FilledButton(
+            onPressed: () => Navigator.pop(c, true),
+            child: const Text('REPLACE ALL'),
+          ),
         ],
       ),
     );
@@ -41,7 +47,10 @@ class SettingsScreen extends StatelessWidget {
       await store.importJson(controller.text);
       await health.checkAll(store.services, store.networkMode);
       if (context.mounted) {
-        toast(context, 'Imported ${store.services.length} services, ${store.hosts.length} hosts');
+        toast(
+          context,
+          'Imported ${store.services.length} services, ${store.hosts.length} hosts',
+        );
       }
     } catch (e) {
       if (context.mounted) toast(context, 'Import failed: $e');
@@ -73,20 +82,26 @@ class SettingsScreen extends StatelessWidget {
                   RadioListTile(
                     value: NetworkMode.auto,
                     title: Text('Auto'),
-                    subtitle: Text('Use LAN URL when it answers, otherwise public URL',
-                        style: TextStyle(color: Mono.dim, fontSize: 12)),
+                    subtitle: Text(
+                      'Use LAN URL when it answers, otherwise public URL',
+                      style: TextStyle(color: Mono.dim, fontSize: 12),
+                    ),
                   ),
                   RadioListTile(
                     value: NetworkMode.remote,
                     title: Text('Always public'),
-                    subtitle: Text('Ignore LAN URLs',
-                        style: TextStyle(color: Mono.dim, fontSize: 12)),
+                    subtitle: Text(
+                      'Ignore LAN URLs',
+                      style: TextStyle(color: Mono.dim, fontSize: 12),
+                    ),
                   ),
                   RadioListTile(
                     value: NetworkMode.local,
                     title: Text('Always LAN'),
-                    subtitle: Text('Prefer LAN URLs even if unreachable',
-                        style: TextStyle(color: Mono.dim, fontSize: 12)),
+                    subtitle: Text(
+                      'Prefer LAN URLs even if unreachable',
+                      style: TextStyle(color: Mono.dim, fontSize: 12),
+                    ),
                   ),
                 ],
               ),
@@ -99,8 +114,10 @@ class SettingsScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.upload_outlined),
               title: const Text('Export to clipboard'),
-              subtitle: const Text('Services and hosts as JSON. Passwords and keys are not included.',
-                  style: TextStyle(color: Mono.dim, fontSize: 12)),
+              subtitle: const Text(
+                'Services and hosts as JSON. Passwords and keys are not included.',
+                style: TextStyle(color: Mono.dim, fontSize: 12),
+              ),
               onTap: () {
                 Clipboard.setData(ClipboardData(text: store.exportJson()));
                 toast(context, 'Copied to clipboard');
@@ -109,8 +126,10 @@ class SettingsScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.download_outlined),
               title: const Text('Import from clipboard'),
-              subtitle: const Text('Replaces current services and hosts',
-                  style: TextStyle(color: Mono.dim, fontSize: 12)),
+              subtitle: const Text(
+                'Replaces current services and hosts',
+                style: TextStyle(color: Mono.dim, fontSize: 12),
+              ),
               onTap: () => _import(context),
             ),
             const Divider(),

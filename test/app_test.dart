@@ -18,7 +18,11 @@ void main() {
   });
 
   test('service json round-trip', () {
-    final s = Service(name: 'Jellyfin', url: 'https://j.example.com', lanUrl: 'http://10.0.0.2:8096');
+    final s = Service(
+      name: 'Jellyfin',
+      url: 'https://j.example.com',
+      lanUrl: 'http://10.0.0.2:8096',
+    );
     final r = Service.fromJson(s.toJson());
     expect(r.id, s.id);
     expect(r.lanUrl, s.lanUrl);

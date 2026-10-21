@@ -54,9 +54,11 @@ ThemeData buildTheme() {
       backgroundColor: Mono.black,
       indicatorColor: Mono.white,
       indicatorShape: const RoundedRectangleBorder(),
-      iconTheme: WidgetStateProperty.resolveWith((s) => IconThemeData(
-            color: s.contains(WidgetState.selected) ? Mono.black : Mono.white,
-          )),
+      iconTheme: WidgetStateProperty.resolveWith(
+        (s) => IconThemeData(
+          color: s.contains(WidgetState.selected) ? Mono.black : Mono.white,
+        ),
+      ),
       labelTextStyle: const WidgetStatePropertyAll(
         TextStyle(fontFamily: Mono.font, fontSize: 11, letterSpacing: 1),
       ),
@@ -117,14 +119,15 @@ ThemeData buildTheme() {
       shape: RoundedRectangleBorder(),
     ),
     switchTheme: SwitchThemeData(
-      thumbColor: WidgetStateProperty.resolveWith((s) =>
-          s.contains(WidgetState.selected) ? Mono.black : Mono.dim),
-      trackColor: WidgetStateProperty.resolveWith((s) =>
-          s.contains(WidgetState.selected) ? Mono.white : Mono.black),
+      thumbColor: WidgetStateProperty.resolveWith(
+        (s) => s.contains(WidgetState.selected) ? Mono.black : Mono.dim,
+      ),
+      trackColor: WidgetStateProperty.resolveWith(
+        (s) => s.contains(WidgetState.selected) ? Mono.white : Mono.black,
+      ),
       trackOutlineColor: const WidgetStatePropertyAll(Mono.dim),
     ),
-    progressIndicatorTheme:
-        const ProgressIndicatorThemeData(color: Mono.white),
+    progressIndicatorTheme: const ProgressIndicatorThemeData(color: Mono.white),
   );
 }
 

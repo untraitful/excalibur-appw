@@ -42,7 +42,8 @@ class _TerminalScreenState extends State<TerminalScreen> {
       if (_ctrl || _alt) setState(() => _ctrl = _alt = false);
       _session?.write(Uint8List.fromList(utf8.encode(out)));
     };
-    _terminal.onResize = (w, h, pw, ph) => _session?.resizeTerminal(w, h, pw, ph);
+    _terminal.onResize = (w, h, pw, ph) =>
+        _session?.resizeTerminal(w, h, pw, ph);
     _connect();
   }
 
@@ -76,8 +77,9 @@ class _TerminalScreenState extends State<TerminalScreen> {
                 secrets.passphrase.isEmpty ? null : secrets.passphrase,
               )
             : null,
-        onPasswordRequest:
-            secrets.password.isNotEmpty ? () => secrets.password : null,
+        onPasswordRequest: secrets.password.isNotEmpty
+            ? () => secrets.password
+            : null,
         onUserauthBanner: (b) => _terminal.write(b.replaceAll('\n', '\r\n')),
       );
       _client = client;
@@ -104,7 +106,9 @@ class _TerminalScreenState extends State<TerminalScreen> {
           .listen(_terminal.write);
 
       if (host.startupCommand.isNotEmpty) {
-        session.write(Uint8List.fromList(utf8.encode('${host.startupCommand}\n')));
+        session.write(
+          Uint8List.fromList(utf8.encode('${host.startupCommand}\n')),
+        );
       }
 
       await session.done;
@@ -137,15 +141,18 @@ class _TerminalScreenState extends State<TerminalScreen> {
         content: SelectableText(
           changed
               ? 'The host key for ${host.host} does not match the trusted key.\n\n'
-                  'This could mean someone is intercepting the connection, or the '
-                  'server was reinstalled.\n\n'
-                  'Trusted:\n${host.fingerprint}\n\nReceived ($type):\n$fingerprint'
+                    'This could mean someone is intercepting the connection, or the '
+                    'server was reinstalled.\n\n'
+                    'Trusted:\n${host.fingerprint}\n\nReceived ($type):\n$fingerprint'
               : 'First connection to ${host.host}. Verify the fingerprint matches '
-                  'the server (ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub):\n\n'
-                  '$type\n$fingerprint',
+                    'the server (ssh-keygen -lf /etc/ssh/ssh_host_ed25519_key.pub):\n\n'
+                    '$type\n$fingerprint',
         ),
         actions: [
-          TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('REJECT')),
+          TextButton(
+            onPressed: () => Navigator.pop(c, false),
+            child: const Text('REJECT'),
+          ),
           FilledButton(
             onPressed: () => Navigator.pop(c, true),
             child: Text(changed ? 'TRUST NEW KEY' : 'TRUST'),
@@ -188,15 +195,25 @@ class _TerminalScreenState extends State<TerminalScreen> {
         actions: [
           IconButton(
             icon: const Icon(Icons.text_decrease),
-            onPressed: () => setState(() => _fontSize = (_fontSize - 1).clamp(8, 24)),
+            onPressed: () =>
+                setState(() => _fontSize = (_fontSize - 1).clamp(8, 24)),
           ),
           IconButton(
             icon: const Icon(Icons.text_increase),
-            onPressed: () => setState(() => _fontSize = (_fontSize + 1).clamp(8, 24)),
+            onPressed: () =>
+                setState(() => _fontSize = (_fontSize + 1).clamp(8, 24)),
           ),
-          IconButton(icon: const Icon(Icons.copy), onPressed: _copy, tooltip: 'Copy selection'),
+          IconButton(
+            icon: const Icon(Icons.copy),
+            onPressed: _copy,
+            tooltip: 'Copy selection',
+          ),
           if (_state == _Conn.closed)
-            IconButton(icon: const Icon(Icons.replay), onPressed: _connect, tooltip: 'Reconnect')
+            IconButton(
+              icon: const Icon(Icons.replay),
+              onPressed: _connect,
+              tooltip: 'Reconnect',
+            )
           else if (_state == _Conn.connecting)
             const Padding(
               padding: EdgeInsets.all(16),
@@ -216,7 +233,10 @@ class _TerminalScreenState extends State<TerminalScreen> {
                 _terminal,
                 controller: _termController,
                 theme: monoTerminalTheme,
-                textStyle: TerminalStyle(fontSize: _fontSize, fontFamily: Mono.font),
+                textStyle: TerminalStyle(
+                  fontSize: _fontSize,
+                  fontFamily: Mono.font,
+                ),
                 padding: const EdgeInsets.all(4),
                 autofocus: true,
                 keyboardType: TextInputType.visiblePassword,
@@ -261,7 +281,8 @@ class _ExtraKeys extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget key(String label, VoidCallback onTap, {bool active = false}) => InkWell(
+    Widget key(String label, VoidCallback onTap, {bool active = false}) =>
+        InkWell(
           onTap: onTap,
           child: Container(
             constraints: const BoxConstraints(minWidth: 44),
@@ -274,13 +295,18 @@ class _ExtraKeys extends StatelessWidget {
             ),
             child: Text(
               label,
-              style: TextStyle(color: active ? Mono.black : Mono.white, fontSize: 13),
+              style: TextStyle(
+                color: active ? Mono.black : Mono.white,
+                fontSize: 13,
+              ),
             ),
           ),
         );
 
     return Container(
-      decoration: const BoxDecoration(border: Border(top: BorderSide(color: Mono.line))),
+      decoration: const BoxDecoration(
+        border: Border(top: BorderSide(color: Mono.line)),
+      ),
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -293,8 +319,7 @@ class _ExtraKeys extends StatelessWidget {
             key('↑', () => onKey(TerminalKey.arrowUp)),
             key('↓', () => onKey(TerminalKey.arrowDown)),
             key('→', () => onKey(TerminalKey.arrowRight)),
-            for (final c in ['|', '-', '/', '~', ':'])
-              key(c, () => onText(c)),
+            for (final c in ['|', '-', '/', '~', ':']) key(c, () => onText(c)),
             key('HOME', () => onKey(TerminalKey.home)),
             key('END', () => onKey(TerminalKey.end)),
             key('PGUP', () => onKey(TerminalKey.pageUp)),

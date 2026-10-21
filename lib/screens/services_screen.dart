@@ -21,7 +21,8 @@ class ServicesScreen extends StatefulWidget {
   State<ServicesScreen> createState() => _ServicesScreenState();
 }
 
-class _ServicesScreenState extends State<ServicesScreen> with WidgetsBindingObserver {
+class _ServicesScreenState extends State<ServicesScreen>
+    with WidgetsBindingObserver {
   Timer? _timer;
   String _filter = '';
 
@@ -63,7 +64,9 @@ class _ServicesScreenState extends State<ServicesScreen> with WidgetsBindingObse
     } else {
       await Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => WebViewScreen(title: s.name, url: url)),
+        MaterialPageRoute(
+          builder: (_) => WebViewScreen(title: s.name, url: url),
+        ),
       );
     }
   }
@@ -72,7 +75,8 @@ class _ServicesScreenState extends State<ServicesScreen> with WidgetsBindingObse
     final result = await Navigator.push<Service>(
       context,
       MaterialPageRoute(
-        builder: (_) => ServiceEditScreen(service: s, categories: store.categories),
+        builder: (_) =>
+            ServiceEditScreen(service: s, categories: store.categories),
       ),
     );
     if (result != null) {
@@ -124,7 +128,11 @@ class _ServicesScreenState extends State<ServicesScreen> with WidgetsBindingObse
               title: const Text('Delete'),
               onTap: () async {
                 Navigator.pop(c);
-                if (await confirm(context, 'Delete ${s.name}?', 'This cannot be undone.')) {
+                if (await confirm(
+                  context,
+                  'Delete ${s.name}?',
+                  'This cannot be undone.',
+                )) {
                   await store.deleteService(s);
                 }
               },
@@ -141,7 +149,11 @@ class _ServicesScreenState extends State<ServicesScreen> with WidgetsBindingObse
       appBar: AppBar(
         title: const Text('EXCALIBUR'),
         actions: [
-          IconButton(icon: const Icon(Icons.refresh), onPressed: _refresh, tooltip: 'Check all'),
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _refresh,
+            tooltip: 'Check all',
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -156,15 +168,19 @@ class _ServicesScreenState extends State<ServicesScreen> with WidgetsBindingObse
             return const EmptyState(
               icon: Icons.grid_view,
               title: 'NO SERVICES',
-              body: 'Tap + to add a link to a service in your homelab.\n'
+              body:
+                  'Tap + to add a link to a service in your homelab.\n'
                   'Settings > Import restores a backup.',
             );
           }
           final q = _filter.toLowerCase();
           final visible = store.services
-              .where((s) => q.isEmpty ||
-                  s.name.toLowerCase().contains(q) ||
-                  s.category.toLowerCase().contains(q))
+              .where(
+                (s) =>
+                    q.isEmpty ||
+                    s.name.toLowerCase().contains(q) ||
+                    s.category.toLowerCase().contains(q),
+              )
               .toList();
           final up = store.services
               .where((s) => health.statusOf(s).health == Health.up)
@@ -194,8 +210,10 @@ class _ServicesScreenState extends State<ServicesScreen> with WidgetsBindingObse
                           ),
                         ),
                         const SizedBox(width: 16),
-                        Text('$up/${store.services.length} UP',
-                            style: const TextStyle(letterSpacing: 1)),
+                        Text(
+                          '$up/${store.services.length} UP',
+                          style: const TextStyle(letterSpacing: 1),
+                        ),
                       ],
                     ),
                   ),
@@ -204,8 +222,14 @@ class _ServicesScreenState extends State<ServicesScreen> with WidgetsBindingObse
                   SliverToBoxAdapter(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-                      child: Text(cat.toUpperCase(),
-                          style: const TextStyle(color: Mono.dim, letterSpacing: 3, fontSize: 12)),
+                      child: Text(
+                        cat.toUpperCase(),
+                        style: const TextStyle(
+                          color: Mono.dim,
+                          letterSpacing: 3,
+                          fontSize: 12,
+                        ),
+                      ),
                     ),
                   ),
                   SliverPadding(
@@ -271,7 +295,10 @@ class _ServiceTile extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  Icon(iconFor(service.icon), color: down ? Mono.dim : Mono.white),
+                  Icon(
+                    iconFor(service.icon),
+                    color: down ? Mono.dim : Mono.white,
+                  ),
                   const Spacer(),
                   StatusDot(status.health),
                 ],
@@ -281,10 +308,20 @@ class _ServiceTile extends StatelessWidget {
                 service.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontSize: 15, color: down ? Mono.dim : Mono.white),
+                style: TextStyle(
+                  fontSize: 15,
+                  color: down ? Mono.dim : Mono.white,
+                ),
               ),
               const SizedBox(height: 2),
-              Text(label, style: const TextStyle(fontSize: 10, color: Mono.dim, letterSpacing: 1)),
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 10,
+                  color: Mono.dim,
+                  letterSpacing: 1,
+                ),
+              ),
             ],
           ),
         ),

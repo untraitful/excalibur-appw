@@ -37,7 +37,12 @@ class StatusDot extends StatelessWidget {
 }
 
 class EmptyState extends StatelessWidget {
-  const EmptyState({super.key, required this.icon, required this.title, required this.body});
+  const EmptyState({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.body,
+  });
   final IconData icon;
   final String title;
   final String body;
@@ -54,7 +59,11 @@ class EmptyState extends StatelessWidget {
             const SizedBox(height: 16),
             Text(title, style: const TextStyle(fontSize: 16, letterSpacing: 2)),
             const SizedBox(height: 8),
-            Text(body, textAlign: TextAlign.center, style: const TextStyle(color: Mono.dim)),
+            Text(
+              body,
+              textAlign: TextAlign.center,
+              style: const TextStyle(color: Mono.dim),
+            ),
           ],
         ),
       ),
@@ -62,16 +71,26 @@ class EmptyState extends StatelessWidget {
   }
 }
 
-Future<bool> confirm(BuildContext context, String title, String body,
-    {String action = 'DELETE'}) async {
+Future<bool> confirm(
+  BuildContext context,
+  String title,
+  String body, {
+  String action = 'DELETE',
+}) async {
   final ok = await showDialog<bool>(
     context: context,
     builder: (c) => AlertDialog(
       title: Text(title),
       content: Text(body),
       actions: [
-        TextButton(onPressed: () => Navigator.pop(c, false), child: const Text('CANCEL')),
-        FilledButton(onPressed: () => Navigator.pop(c, true), child: Text(action)),
+        TextButton(
+          onPressed: () => Navigator.pop(c, false),
+          child: const Text('CANCEL'),
+        ),
+        FilledButton(
+          onPressed: () => Navigator.pop(c, true),
+          child: Text(action),
+        ),
       ],
     ),
   );

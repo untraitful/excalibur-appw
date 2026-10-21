@@ -24,13 +24,17 @@ class _WebViewScreenState extends State<WebViewScreen> {
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setBackgroundColor(Mono.black)
-      ..setNavigationDelegate(NavigationDelegate(
-        onProgress: (p) => setState(() => _progress = p),
-        onPageStarted: (_) => setState(() => _error = null),
-        onWebResourceError: (e) {
-          if (e.isForMainFrame ?? true) setState(() => _error = e.description);
-        },
-      ))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (p) => setState(() => _progress = p),
+          onPageStarted: (_) => setState(() => _error = null),
+          onWebResourceError: (e) {
+            if (e.isForMainFrame ?? true) {
+              setState(() => _error = e.description);
+            }
+          },
+        ),
+      )
       ..loadRequest(Uri.parse(widget.url));
   }
 
@@ -59,7 +63,10 @@ class _WebViewScreenState extends State<WebViewScreen> {
               icon: const Icon(Icons.open_in_new),
               onPressed: () async {
                 final current = await _controller.currentUrl() ?? widget.url;
-                await launchUrl(Uri.parse(current), mode: LaunchMode.externalApplication);
+                await launchUrl(
+                  Uri.parse(current),
+                  mode: LaunchMode.externalApplication,
+                );
               },
             ),
           ],

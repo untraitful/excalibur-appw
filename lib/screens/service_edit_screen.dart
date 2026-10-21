@@ -17,7 +17,9 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
   late final _name = TextEditingController(text: widget.service?.name);
   late final _url = TextEditingController(text: widget.service?.url);
   late final _lan = TextEditingController(text: widget.service?.lanUrl);
-  late final _cat = TextEditingController(text: widget.service?.category ?? 'General');
+  late final _cat = TextEditingController(
+    text: widget.service?.category ?? 'General',
+  );
   late String _icon = widget.service?.icon ?? 'web';
   late bool _external = widget.service?.openExternal ?? false;
 
@@ -33,7 +35,9 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
     final t = v?.trim() ?? '';
     if (t.isEmpty) return required ? 'Required' : null;
     final u = Uri.tryParse(t);
-    if (u == null || !(u.isScheme('http') || u.isScheme('https')) || u.host.isEmpty) {
+    if (u == null ||
+        !(u.isScheme('http') || u.isScheme('https')) ||
+        u.host.isEmpty) {
       return 'Must start with http:// or https://';
     }
     return null;
@@ -80,7 +84,8 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                 hintText: 'https://jellyfin.example.com',
               ),
               // Either address is enough, but at least one is needed.
-              validator: (v) => _validateUrl(v, required: _lan.text.trim().isEmpty),
+              validator: (v) =>
+                  _validateUrl(v, required: _lan.text.trim().isEmpty),
             ),
             gap,
             TextFormField(
@@ -125,7 +130,10 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
               onChanged: (v) => setState(() => _external = v),
             ),
             gap,
-            const Text('ICON', style: TextStyle(color: Mono.dim, letterSpacing: 3, fontSize: 12)),
+            const Text(
+              'ICON',
+              style: TextStyle(color: Mono.dim, letterSpacing: 3, fontSize: 12),
+            ),
             const SizedBox(height: 8),
             Wrap(
               spacing: 8,
@@ -139,9 +147,14 @@ class _ServiceEditScreenState extends State<ServiceEditScreen> {
                       height: 48,
                       decoration: BoxDecoration(
                         color: _icon == e.key ? Mono.white : null,
-                        border: Border.all(color: _icon == e.key ? Mono.white : Mono.line),
+                        border: Border.all(
+                          color: _icon == e.key ? Mono.white : Mono.line,
+                        ),
                       ),
-                      child: Icon(e.value, color: _icon == e.key ? Mono.black : Mono.white),
+                      child: Icon(
+                        e.value,
+                        color: _icon == e.key ? Mono.black : Mono.white,
+                      ),
                     ),
                   ),
               ],

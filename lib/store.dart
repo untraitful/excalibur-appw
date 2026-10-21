@@ -54,16 +54,23 @@ class AppStore extends ChangeNotifier {
 
   Future<void> _persist() async {
     await _prefs.setString(
-        _kServices, jsonEncode(services.map((s) => s.toJson()).toList()));
+      _kServices,
+      jsonEncode(services.map((s) => s.toJson()).toList()),
+    );
     await _prefs.setString(
-        _kHosts, jsonEncode(hosts.map((h) => h.toJson()).toList()));
+      _kHosts,
+      jsonEncode(hosts.map((h) => h.toJson()).toList()),
+    );
     await _prefs.setString(_kNetworkMode, networkMode.name);
     notifyListeners();
   }
 
   List<String> get categories {
     final seen = <String>{};
-    return [for (final s in services) if (seen.add(s.category)) s.category];
+    return [
+      for (final s in services)
+        if (seen.add(s.category)) s.category,
+    ];
   }
 
   // Services -----------------------------------------------------------------
@@ -108,10 +115,10 @@ class AppStore extends ChangeNotifier {
   }
 
   Future<SshSecrets> loadSecrets(String hostId) async => SshSecrets(
-        password: await _secure.read(key: '$hostId.password') ?? '',
-        privateKey: await _secure.read(key: '$hostId.key') ?? '',
-        passphrase: await _secure.read(key: '$hostId.passphrase') ?? '',
-      );
+    password: await _secure.read(key: '$hostId.password') ?? '',
+    privateKey: await _secure.read(key: '$hostId.key') ?? '',
+    passphrase: await _secure.read(key: '$hostId.passphrase') ?? '',
+  );
 
   // Settings -----------------------------------------------------------------
 
@@ -124,10 +131,10 @@ class AppStore extends ChangeNotifier {
 
   /// Exports services and hosts as JSON. Credentials are never exported.
   String exportJson() => const JsonEncoder.withIndent('  ').convert({
-        'version': 1,
-        'services': services.map((s) => s.toJson()).toList(),
-        'hosts': hosts.map((h) => h.toJson()).toList(),
-      });
+    'version': 1,
+    'services': services.map((s) => s.toJson()).toList(),
+    'hosts': hosts.map((h) => h.toJson()).toList(),
+  });
 
   /// Replaces services and hosts with the contents of [raw]. Throws
   /// [FormatException] on malformed input.
@@ -138,11 +145,11 @@ class AppStore extends ChangeNotifier {
     }
     services = [
       for (final e in (data['services'] as List? ?? []))
-        Service.fromJson(e as Map<String, dynamic>)
+        Service.fromJson(e as Map<String, dynamic>),
     ];
     hosts = [
       for (final e in (data['hosts'] as List? ?? []))
-        SshHost.fromJson(e as Map<String, dynamic>)
+        SshHost.fromJson(e as Map<String, dynamic>),
     ];
     await _persist();
   }

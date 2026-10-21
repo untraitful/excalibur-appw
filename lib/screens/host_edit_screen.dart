@@ -21,7 +21,9 @@ class _HostEditScreenState extends State<HostEditScreen> {
   late final _host = TextEditingController(text: widget.host?.host);
   late final _port = TextEditingController(text: '${widget.host?.port ?? 22}');
   late final _user = TextEditingController(text: widget.host?.username);
-  late final _startup = TextEditingController(text: widget.host?.startupCommand);
+  late final _startup = TextEditingController(
+    text: widget.host?.startupCommand,
+  );
   final _password = TextEditingController();
   final _key = TextEditingController();
   final _passphrase = TextEditingController();
@@ -44,7 +46,16 @@ class _HostEditScreenState extends State<HostEditScreen> {
 
   @override
   void dispose() {
-    for (final c in [_name, _host, _port, _user, _startup, _password, _key, _passphrase]) {
+    for (final c in [
+      _name,
+      _host,
+      _port,
+      _user,
+      _startup,
+      _password,
+      _key,
+      _passphrase,
+    ]) {
       c.dispose();
     }
     super.dispose();
@@ -87,7 +98,11 @@ class _HostEditScreenState extends State<HostEditScreen> {
 
   Future<void> _delete() async {
     final h = widget.host!;
-    if (await confirm(context, 'Delete ${h.name}?', 'Stored credentials are erased too.')) {
+    if (await confirm(
+      context,
+      'Delete ${h.name}?',
+      'Stored credentials are erased too.',
+    )) {
       await widget.store.deleteHost(h);
       if (mounted) Navigator.pop(context);
     }
@@ -105,7 +120,10 @@ class _HostEditScreenState extends State<HostEditScreen> {
         title: Text(widget.host == null ? 'ADD HOST' : 'EDIT HOST'),
         actions: [
           if (widget.host != null)
-            IconButton(icon: const Icon(Icons.delete_outline), onPressed: _delete),
+            IconButton(
+              icon: const Icon(Icons.delete_outline),
+              onPressed: _delete,
+            ),
           TextButton(onPressed: _save, child: const Text('SAVE')),
         ],
       ),
@@ -116,7 +134,10 @@ class _HostEditScreenState extends State<HostEditScreen> {
           children: [
             TextFormField(
               controller: _name,
-              decoration: const InputDecoration(labelText: 'Label', hintText: 'proxmox'),
+              decoration: const InputDecoration(
+                labelText: 'Label',
+                hintText: 'proxmox',
+              ),
             ),
             gap,
             Row(
@@ -130,7 +151,8 @@ class _HostEditScreenState extends State<HostEditScreen> {
                       labelText: 'Host',
                       hintText: 'ssh.example.com',
                     ),
-                    validator: (v) => (v ?? '').trim().isEmpty ? 'Required' : null,
+                    validator: (v) =>
+                        (v ?? '').trim().isEmpty ? 'Required' : null,
                   ),
                 ),
                 const SizedBox(width: 8),
@@ -163,8 +185,14 @@ class _HostEditScreenState extends State<HostEditScreen> {
               ),
               showSelectedIcon: false,
               segments: const [
-                ButtonSegment(value: AuthMethod.key, label: Text('PRIVATE KEY')),
-                ButtonSegment(value: AuthMethod.password, label: Text('PASSWORD')),
+                ButtonSegment(
+                  value: AuthMethod.key,
+                  label: Text('PRIVATE KEY'),
+                ),
+                ButtonSegment(
+                  value: AuthMethod.password,
+                  label: Text('PASSWORD'),
+                ),
               ],
               selected: {_auth},
               onSelectionChanged: (s) => setState(() => _auth = s.first),
@@ -197,7 +225,10 @@ class _HostEditScreenState extends State<HostEditScreen> {
               TextFormField(
                 controller: _password,
                 obscureText: _obscure,
-                decoration: InputDecoration(labelText: 'Password', suffixIcon: secretToggle),
+                decoration: InputDecoration(
+                  labelText: 'Password',
+                  suffixIcon: secretToggle,
+                ),
               ),
             gap,
             TextFormField(

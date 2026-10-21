@@ -14,7 +14,9 @@ class HostsScreen extends StatelessWidget {
   Future<void> _edit(BuildContext context, [SshHost? h]) async {
     await Navigator.push<void>(
       context,
-      MaterialPageRoute(builder: (_) => HostEditScreen(store: store, host: h)),
+      MaterialPageRoute(
+        builder: (_) => HostEditScreen(store: store, host: h),
+      ),
     );
   }
 
@@ -34,7 +36,8 @@ class HostsScreen extends StatelessWidget {
             return const EmptyState(
               icon: Icons.terminal,
               title: 'NO HOSTS',
-              body: 'Tap + to add an SSH host.\nKey authentication is strongly '
+              body:
+                  'Tap + to add an SSH host.\nKey authentication is strongly '
                   'recommended for hosts reachable from the internet.',
             );
           }
@@ -44,7 +47,11 @@ class HostsScreen extends StatelessWidget {
             itemBuilder: (context, i) {
               final h = store.hosts[i];
               return ListTile(
-                leading: Icon(h.auth == AuthMethod.key ? Icons.key_outlined : Icons.password),
+                leading: Icon(
+                  h.auth == AuthMethod.key
+                      ? Icons.key_outlined
+                      : Icons.password,
+                ),
                 title: Text(h.name),
                 subtitle: Text(
                   '${h.username}@${h.host}:${h.port}',
@@ -56,7 +63,9 @@ class HostsScreen extends StatelessWidget {
                 ),
                 onTap: () => Navigator.push<void>(
                   context,
-                  MaterialPageRoute(builder: (_) => TerminalScreen(store: store, host: h)),
+                  MaterialPageRoute(
+                    builder: (_) => TerminalScreen(store: store, host: h),
+                  ),
                 ),
               );
             },

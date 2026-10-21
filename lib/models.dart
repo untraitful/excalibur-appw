@@ -31,24 +31,24 @@ class Service {
   bool openExternal;
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'url': url,
-        'lanUrl': lanUrl,
-        'category': category,
-        'icon': icon,
-        'openExternal': openExternal,
-      };
+    'id': id,
+    'name': name,
+    'url': url,
+    'lanUrl': lanUrl,
+    'category': category,
+    'icon': icon,
+    'openExternal': openExternal,
+  };
 
   factory Service.fromJson(Map<String, dynamic> j) => Service(
-        id: j['id'] as String?,
-        name: j['name'] as String? ?? 'Unnamed',
-        url: j['url'] as String? ?? '',
-        lanUrl: j['lanUrl'] as String? ?? '',
-        category: j['category'] as String? ?? 'General',
-        icon: j['icon'] as String? ?? 'web',
-        openExternal: j['openExternal'] as bool? ?? false,
-      );
+    id: j['id'] as String?,
+    name: j['name'] as String? ?? 'Unnamed',
+    url: j['url'] as String? ?? '',
+    lanUrl: j['lanUrl'] as String? ?? '',
+    category: j['category'] as String? ?? 'General',
+    icon: j['icon'] as String? ?? 'web',
+    openExternal: j['openExternal'] as bool? ?? false,
+  );
 }
 
 enum AuthMethod { password, key }
@@ -81,33 +81,37 @@ class SshHost {
   String startupCommand;
 
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'name': name,
-        'host': host,
-        'port': port,
-        'username': username,
-        'auth': auth.name,
-        'fingerprint': fingerprint,
-        'startupCommand': startupCommand,
-      };
+    'id': id,
+    'name': name,
+    'host': host,
+    'port': port,
+    'username': username,
+    'auth': auth.name,
+    'fingerprint': fingerprint,
+    'startupCommand': startupCommand,
+  };
 
   factory SshHost.fromJson(Map<String, dynamic> j) => SshHost(
-        id: j['id'] as String?,
-        name: j['name'] as String? ?? 'Unnamed',
-        host: j['host'] as String? ?? '',
-        port: (j['port'] as num?)?.toInt() ?? 22,
-        username: j['username'] as String? ?? 'root',
-        auth: AuthMethod.values.firstWhere(
-          (a) => a.name == j['auth'],
-          orElse: () => AuthMethod.key,
-        ),
-        fingerprint: j['fingerprint'] as String? ?? '',
-        startupCommand: j['startupCommand'] as String? ?? '',
-      );
+    id: j['id'] as String?,
+    name: j['name'] as String? ?? 'Unnamed',
+    host: j['host'] as String? ?? '',
+    port: (j['port'] as num?)?.toInt() ?? 22,
+    username: j['username'] as String? ?? 'root',
+    auth: AuthMethod.values.firstWhere(
+      (a) => a.name == j['auth'],
+      orElse: () => AuthMethod.key,
+    ),
+    fingerprint: j['fingerprint'] as String? ?? '',
+    startupCommand: j['startupCommand'] as String? ?? '',
+  );
 }
 
 class SshSecrets {
-  const SshSecrets({this.password = '', this.privateKey = '', this.passphrase = ''});
+  const SshSecrets({
+    this.password = '',
+    this.privateKey = '',
+    this.passphrase = '',
+  });
   final String password;
   final String privateKey;
   final String passphrase;
